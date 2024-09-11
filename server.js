@@ -14,7 +14,14 @@ const headers = {
         Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
     }
 };
-
+app.get('/api/repo-languages', async (req, res) => {
+    try {
+        const { data } = await axios.get('https://api.github.com/repos/timebuffer/smartbroad/languages', { headers });
+        res.json(data); // Sends back the languages used in the repository
+    } catch (error) {
+        res.status(500).send('Error retrieving repository languages');
+    }
+});
 
 // Route to fetch GitHub repo information
 app.get('/api/repo', async (req, res) => {
